@@ -21,9 +21,12 @@ public class Main {
 					// init our gui 
 					GUI_MainWindow guiMainWindow = new GUI_MainWindow();
 					
+					// beads elemetns 
+					AudioContext audioContext = new AudioContext(); 
+					
 					// controllers 
 					Controller_File controllerFile = new Controller_File();
-					Controller_Grain controllerGrain = new Controller_Grain(); 
+					Controller_Grain controllerGrain = new Controller_Grain(audioContext); 
 					
 					Controller_MainWindow controllerMainWindow = 
 							new Controller_MainWindow(guiMainWindow, controllerFile, controllerGrain);

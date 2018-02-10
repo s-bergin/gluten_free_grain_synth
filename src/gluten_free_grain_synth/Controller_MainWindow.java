@@ -20,6 +20,7 @@ public class Controller_MainWindow {
 		
 		this.mainWindow.addChooseFileListener(new ChooseFileListener());
 		this.mainWindow.addPlayFileListener(new PlayListener());
+		this.mainWindow.addStopFileListener(new StopListener());
 	}
 	
 	private class ChooseFileListener implements ActionListener{
@@ -36,6 +37,14 @@ public class Controller_MainWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controllerGrain.onPlay();	
+		}
+	}
+	
+	private class StopListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controllerGrain.onStop(); 
 		}
 	}
 }

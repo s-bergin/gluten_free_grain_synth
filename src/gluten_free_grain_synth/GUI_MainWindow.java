@@ -15,6 +15,7 @@ public class GUI_MainWindow implements I_View{
 	private JFrame frame;
 	private JButton btnChooseFile;   
 	private JButton btnPlayFile; 
+	private JButton btnStopFile;
 	 
 	/**
 	 * Create the application.
@@ -33,10 +34,13 @@ public class GUI_MainWindow implements I_View{
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.btnChooseFile = new JButton("Choose file");
-		frame.getContentPane().add(this.btnChooseFile, BorderLayout.WEST);
+		this.frame.getContentPane().add(this.btnChooseFile, BorderLayout.WEST);
 		
 		this.btnPlayFile = new JButton("Play");
-		frame.getContentPane().add(this.btnPlayFile, BorderLayout.NORTH);
+		this.frame.getContentPane().add(this.btnPlayFile, BorderLayout.NORTH);
+		
+		this.btnStopFile = new JButton("Stop");
+		this.frame.getContentPane().add(this.btnStopFile, BorderLayout.CENTER);
 
 	}
 	
@@ -46,6 +50,10 @@ public class GUI_MainWindow implements I_View{
 	
 	public void addPlayFileListener(ActionListener listener) {
 		this.btnPlayFile.addActionListener(listener);
+	}
+	
+	public void addStopFileListener(ActionListener listener) {
+		this.btnStopFile.addActionListener(listener);
 	}
 
 	@Override

@@ -13,7 +13,11 @@ public class Controller_Grain {
 	
 	private File file; 
 	
-	public Controller_Grain() {
+	private AudioContext audioContext; 
+	
+	public Controller_Grain(AudioContext audioContext) {
+		this.audioContext = audioContext; 
+				
 	}
 	
 	public void setFile(File file) {
@@ -22,44 +26,45 @@ public class Controller_Grain {
 	
 	public void onPlay() {
 		
-		AudioContext ac;
-
-		ac = new AudioContext();
-		/*
-		 * In lesson 4 we played back samples. This example is almost the same
-		 * but uses GranularSamplePlayer instead of SamplePlayer. See some of
-		 * the controls below.
-		 */
-		String audioFile = this.file.getPath();
-		GranularSamplePlayer player = new GranularSamplePlayer(ac,
-				SampleManager.sample(audioFile));
-		/*
-		 * Have some fun with the controls.
-		 */
-		// loop the sample at its end points
-		player.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
-		player.getLoopStartUGen().setValue(0);
-		player.getLoopEndUGen().setValue(
-				(float)SampleManager.sample(audioFile).getLength());
-		// control the rate of grain firing
-		Envelope grainIntervalEnvelope = new Envelope(ac, 100);
-		grainIntervalEnvelope.addSegment(20, 10000);
-		player.setGrainInterval(grainIntervalEnvelope);
-		// control the playback rate
-		Envelope rateEnvelope = new Envelope(ac, 1);
-		rateEnvelope.addSegment(1, 5000);
-		rateEnvelope.addSegment(0, 5000);
-		rateEnvelope.addSegment(0, 2000);
-		rateEnvelope.addSegment(-0.1f, 2000);
-		player.setRate(rateEnvelope);
-		// a bit of noise can be nice
-		player.getRandomnessUGen().setValue(0.01f);
-		/*
-		 * And as before...
-		 */
-		Gain g = new Gain(ac, 2, 0.2f);
-		g.addInput(player);
-		ac.out.addInput(g);
-		ac.start();
+		if(this.file != null) {
+			String audioFile = this.file.getPath();
+			GranularSamplePlayer player = new GranularSamplePlayer(this.audioContext,
+					SampleManager.sample(audioFile));
+			/*
+			 * Have some fun with the controls.
+			 */
+			// loop the sample at its end points
+			player.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
+			player.getLoopStartUGen().setValue(0);
+			player.getLoopEndUGen().setValue(
+					(float)SampleManager.sample(audioFile).getLength());
+			// control the rate of grain firing
+			Envelope grainIntervalEnvelope = new Envelope(this.audioContext, 100);
+			grainIntervalEnvelope.addSegment(20, 10000);
+			player.setGrainInterval(grainIntervalEnvelope);
+			// control the playback rate
+			Envelope rateEnvelope = new Envelope(this.audioContext, 1);
+			rateEnvelope.addSegment(1, 5000);
+			rateEnvelope.addSegment(0, 5000);
+			rateEnvelope.addSegment(0, 2000);
+			rateEnvelope.addSegment(-0.1f, 2000);
+			player.setRate(rateEnvelope);
+			// a bit of noise can be nice
+			player.getRandomnessUGen().setValue(0.01f);
+			/*
+			 * And as before...
+			 */
+			Gain g = new Gain(this.audioContext, 2, 0.2f);
+			g.addInput(player);
+			this.audioContext.out.addInput(g);
+			this.audioContext.start();
+		}else {
+			// TODO - Add prompt functionality to GUI 
+			System.out.println("Please choose a file");
+		}
+	}
+	
+	public void onStop() {
+		this.audioContext.stop(); 
 	}
 }
