@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Code/gluten_free_grain_synth/lib/beads.jar"/>
+	<classpathentry kind="lib" path="C:/Code/gluten_free_grain_synth/lib/beads-io.jar"/>
+	<classpathentry kind="lib" path="C:/Code/gluten_free_grain_synth/lib/swt.jar"/>
+	<classpathentry kind="lib" path="C:/Code/gluten_free_grain_synth/lib/swt-debug.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
