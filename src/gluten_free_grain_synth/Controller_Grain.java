@@ -14,10 +14,22 @@ public class Controller_Grain {
 	private File file; 
 	
 	private AudioContext audioContext; 
+	private GranularSamplePlayer grainPlayer; 
+	
+	private float loopStartVal = 0; 
 	
 	public Controller_Grain(AudioContext audioContext) {
 		this.audioContext = audioContext; 
 				
+	}
+	
+	public void setLoopStartVal(float val) {
+		this.loopStartVal = val; 
+	}
+	
+	public void onChangeStartPos(float val) {
+		this.loopStartVal = val; 
+		this.grainPlayer.getLoopStartUGen().setValue(val);
 	}
 	
 	public void setFile(File file) {
@@ -28,34 +40,34 @@ public class Controller_Grain {
 		
 		if(this.file != null) {
 			String audioFile = this.file.getPath();
-			GranularSamplePlayer player = new GranularSamplePlayer(this.audioContext,
+			this.grainPlayer = new GranularSamplePlayer(this.audioContext,
 					SampleManager.sample(audioFile));
 			/*
 			 * Have some fun with the controls.
 			 */
 			// loop the sample at its end points
-			player.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
-			player.getLoopStartUGen().setValue(0);
-			player.getLoopEndUGen().setValue(
+			this.grainPlayer.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
+			this.grainPlayer.getLoopStartUGen().setValue(0);
+			this.grainPlayer.getLoopEndUGen().setValue(
 					(float)SampleManager.sample(audioFile).getLength());
 			// control the rate of grain firing
 			Envelope grainIntervalEnvelope = new Envelope(this.audioContext, 100);
 			grainIntervalEnvelope.addSegment(20, 10000);
-			player.setGrainInterval(grainIntervalEnvelope);
+			this.grainPlayer.setGrainInterval(grainIntervalEnvelope);
 			// control the playback rate
 			Envelope rateEnvelope = new Envelope(this.audioContext, 1);
 			rateEnvelope.addSegment(1, 5000);
 			rateEnvelope.addSegment(0, 5000);
 			rateEnvelope.addSegment(0, 2000);
 			rateEnvelope.addSegment(-0.1f, 2000);
-			player.setRate(rateEnvelope);
+			this.grainPlayer.setRate(rateEnvelope);
 			// a bit of noise can be nice
-			player.getRandomnessUGen().setValue(0.01f);
+			this.grainPlayer.getRandomnessUGen().setValue(0.01f);
 			/*
 			 * And as before...
 			 */
 			Gain g = new Gain(this.audioContext, 2, 0.2f);
-			g.addInput(player);
+			g.addInput(this.grainPlayer);
 			this.audioContext.out.addInput(g);
 			this.audioContext.start();
 		}else {

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class Controller_MainWindow {
 	
@@ -21,6 +23,7 @@ public class Controller_MainWindow {
 		this.mainWindow.addChooseFileListener(new ChooseFileListener());
 		this.mainWindow.addPlayFileListener(new PlayListener());
 		this.mainWindow.addStopFileListener(new StopListener());
+		this.mainWindow.addStartPosListener(new StartPosListener());
 	}
 	
 	private class ChooseFileListener implements ActionListener{
@@ -45,6 +48,16 @@ public class Controller_MainWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controllerGrain.onStop(); 
+		}
+	}
+	
+	private class StartPosListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			// TODO Auto-generated method stub
+			float value = mainWindow.getStartPosValue(); 
+			controllerGrain.onChangeStartPos(value); 
 		}
 	}
 }
