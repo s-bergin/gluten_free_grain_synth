@@ -17,15 +17,16 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					// init our gui 
 					GUI_MainWindow guiMainWindow = new GUI_MainWindow();
-					AudioContext audioContext = new AudioContext(); 
 					
-					String sampleFile = "res/audio/pummeled.wav"; 
+					// controllers 
+					Controller_File controllerFile = new Controller_File();
+					Controller_MainWindow controllerMainWindow = new Controller_MainWindow(guiMainWindow, controllerFile);
 					
-					GranularSamplePlayer grainPlayer =  new GranularSamplePlayer(audioContext, 
-							SampleManager.sample(sampleFile)); 
-					
-					Controller_Play controllerPlay = new Controller_Play(guiMainWindow, audioContext, grainPlayer);
+					// start app 
+					guiMainWindow.setVisible(true);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

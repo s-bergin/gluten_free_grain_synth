@@ -5,15 +5,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.BorderLayout;
+import javax.swing.JFileChooser;
 
-public class GUI_MainWindow {
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+
+public class GUI_MainWindow implements I_View{
 
 	private JFrame frame;
-	
-	private JButton btnPlay; 
-	
-
+	private JButton btnChooseFile;   
+	private JButton btnPlayFile; 
+	 
 	/**
 	 * Create the application.
 	 */
@@ -30,13 +32,25 @@ public class GUI_MainWindow {
 		this.frame.setBounds(100, 100, 450, 300);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.btnPlay = new JButton("Play");
-		this.frame.getContentPane().add(btnPlay, BorderLayout.WEST);
+		this.btnChooseFile = new JButton("Choose file");
+		frame.getContentPane().add(this.btnChooseFile, BorderLayout.WEST);
 		
-		this.frame.setVisible(true);
+		this.btnPlayFile = new JButton("Play");
+		frame.getContentPane().add(this.btnPlayFile, BorderLayout.NORTH);
+
 	}
 	
-	public void AddPlayLister(ActionListener listener){
-		this.btnPlay.addActionListener(listener);
+	public void addChooseFileListener(ActionListener listener) {
+		this.btnChooseFile.addActionListener(listener);
 	}
+	
+	public void addPlayFileListener(ActionListener listener) {
+		this.btnPlayFile.addActionListener(listener);
+	}
+
+	@Override
+	public void setVisible(Boolean visible) {
+		this.frame.setVisible(visible);
+	}
+	
 }
