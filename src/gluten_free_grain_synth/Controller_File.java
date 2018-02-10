@@ -18,7 +18,7 @@ public class Controller_File {
 		this.userFile = file; 
 	}
 	
-	public java.io.File getUserFile(File file) {
+	public java.io.File getUserFile() {
 		return this.userFile; 
 	}
 	

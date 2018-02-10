@@ -23,7 +23,10 @@ public class Main {
 					
 					// controllers 
 					Controller_File controllerFile = new Controller_File();
-					Controller_MainWindow controllerMainWindow = new Controller_MainWindow(guiMainWindow, controllerFile);
+					Controller_Grain controllerGrain = new Controller_Grain(); 
+					
+					Controller_MainWindow controllerMainWindow = 
+							new Controller_MainWindow(guiMainWindow, controllerFile, controllerGrain);
 					
 					// start app 
 					guiMainWindow.setVisible(true);
