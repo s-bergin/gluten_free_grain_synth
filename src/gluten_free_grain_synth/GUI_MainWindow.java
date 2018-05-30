@@ -21,8 +21,10 @@ public class GUI_MainWindow implements I_View{
 	private JButton btnPlayFile; 
 	private JButton btnStopFile;
 	
-	private JLabel lblStartPos; 
-	private JSlider sldStartPos; 
+	private JLabel lblPitch; 
+	private JSlider sldPitch; 
+	private JSlider sldGrainInterval;
+	private JLabel lblGrainInterval;
 	 
 	/**
 	 * Create the application.
@@ -53,13 +55,23 @@ public class GUI_MainWindow implements I_View{
 		btnStopFile.setBounds(0, 87, 85, 65);
 		this.frame.getContentPane().add(this.btnStopFile);
 		
-		this.sldStartPos = new JSlider();
-		this.sldStartPos.setBounds(137, 47, 200, 23);
-		this.frame.getContentPane().add(this.sldStartPos);
+		this.sldPitch = new JSlider();
+		sldPitch.setMaximum(5);
+		this.sldPitch.setBounds(137, 22, 200, 23);
+		this.frame.getContentPane().add(this.sldPitch);
 		
-		this.lblStartPos = new JLabel("Start Pos");
-		this.lblStartPos.setBounds(213, 22, 46, 14);
-		this.frame.getContentPane().add(this.lblStartPos);
+		this.lblPitch = new JLabel("Pitch");
+		lblPitch.setEnabled(false);
+		this.lblPitch.setBounds(213, 11, 46, 14);
+		this.frame.getContentPane().add(this.lblPitch);
+		
+		this.sldGrainInterval = new JSlider();
+		this.sldGrainInterval.setBounds(137, 71, 200, 23);
+		this.frame.getContentPane().add(this.sldGrainInterval);
+		
+		this.lblGrainInterval = new JLabel("Grain Interval");
+		this.lblGrainInterval.setBounds(213, 46, 46, 14);
+		this.frame.getContentPane().add(this.lblGrainInterval);
 
 	}
 	
@@ -75,12 +87,20 @@ public class GUI_MainWindow implements I_View{
 		this.btnStopFile.addActionListener(listener);
 	}
 	
-	public void addStartPosListener(ChangeListener listener) {
-		this.sldStartPos.addChangeListener(listener);
+	public void addPitchListener(ChangeListener listener) {
+		this.sldPitch.addChangeListener(listener);
 	}
 	
-	public int getStartPosValue() {
-		return this.sldStartPos.getValue(); 
+	public void addGrainIntervalListener(ChangeListener listener) {
+		this.sldGrainInterval.addChangeListener(listener);
+	}
+	
+	public float getGrainInterval() {
+		return (float)this.sldGrainInterval.getValue();
+	}
+	
+	public int getPitch() {
+		return this.sldPitch.getValue(); 
 	}
 	
 	@Override

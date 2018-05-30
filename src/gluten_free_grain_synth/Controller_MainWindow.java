@@ -23,7 +23,8 @@ public class Controller_MainWindow {
 		this.mainWindow.addChooseFileListener(new ChooseFileListener());
 		this.mainWindow.addPlayFileListener(new PlayListener());
 		this.mainWindow.addStopFileListener(new StopListener());
-		this.mainWindow.addStartPosListener(new StartPosListener());
+		this.mainWindow.addPitchListener(new PitchListener());
+		this.mainWindow.addGrainIntervalListener(new GrainIntervalListener());
 	}
 	
 	private class ChooseFileListener implements ActionListener{
@@ -51,13 +52,24 @@ public class Controller_MainWindow {
 		}
 	}
 	
-	private class StartPosListener implements ChangeListener{
+	private class PitchListener implements ChangeListener{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			// TODO Auto-generated method stub
-			float value = mainWindow.getStartPosValue(); 
-			controllerGrain.onChangeStartPos(value); 
+			float value = mainWindow.getPitch(); 
+			controllerGrain.onChangePitch(value); 
 		}
+	}
+	
+	private class GrainIntervalListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			// TODO Auto-generated method stub
+			float value = mainWindow.getGrainInterval();
+			controllerGrain.onChangeGrainInterval(value);
+		}
+		
 	}
 }
