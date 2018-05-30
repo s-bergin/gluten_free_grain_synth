@@ -8,6 +8,7 @@ import net.beadsproject.beads.ugens.Envelope;
 import net.beadsproject.beads.ugens.Gain;
 import net.beadsproject.beads.ugens.GranularSamplePlayer;
 import net.beadsproject.beads.ugens.SamplePlayer;
+import net.beadsproject.beads.ugens.SamplePlayer.LoopType;
 
 public class Controller_Grain {
 	
@@ -22,12 +23,32 @@ public class Controller_Grain {
 	}
 	
 	public void onChangePitch(float val) {
-		System.out.println("Changing pitch...");
 		this.grainPlayer.getPitchUGen().setValue(val);
 	}
 	
 	public void onChangeGrainInterval(float val) {		
 		this.grainPlayer.getGrainIntervalUGen().setValue(val);
+	}
+	
+	public void onChangeGrainSize(int val) {		
+		this.grainPlayer.getGrainSizeUGen().setValue(val);
+	}
+	
+	public void onChangeLoopType(int val) {		
+			
+		switch(val) {
+			case 1:
+				this.grainPlayer.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
+				break;
+			case 2:
+				this.grainPlayer.setLoopType(SamplePlayer.LoopType.LOOP_BACKWARDS);
+				break;
+			case 3:
+				this.grainPlayer.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+				break;
+			default:
+				break;
+		}
 	}
 	
 	public void setFile(File file) {
@@ -37,14 +58,15 @@ public class Controller_Grain {
 	public void onPlay() {
 		
 		if(this.file != null) {
-			String audioFile = this.file.getPath();
+			String audioFile = this.getFilePath();
 			this.grainPlayer = new GranularSamplePlayer(this.audioContext,
 					SampleManager.sample(audioFile));
 
 			this.grainPlayer.setLoopType(SamplePlayer.LoopType.LOOP_ALTERNATING);
 			this.grainPlayer.getLoopStartUGen().setValue(0);
-			this.grainPlayer.getLoopEndUGen().setValue(
-					(float)SampleManager.sample(audioFile).getLength());
+			
+			float fileLength = this.getFileLength();
+			this.grainPlayer.getLoopEndUGen().setValue(fileLength);
 			
 			this.grainGain = new Gain(this.audioContext, 2, 1.0f);
 
@@ -60,5 +82,13 @@ public class Controller_Grain {
 	
 	public void onStop() {
 		this.audioContext.stop(); 
+	}
+	
+	public String getFilePath(){		
+		return this.file.getPath();
+	}
+	
+	public float getFileLength(){
+		return (float)SampleManager.sample(this.getFilePath()).getLength();
 	}
 }

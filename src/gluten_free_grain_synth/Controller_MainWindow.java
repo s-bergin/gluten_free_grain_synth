@@ -25,6 +25,8 @@ public class Controller_MainWindow {
 		this.mainWindow.addStopFileListener(new StopListener());
 		this.mainWindow.addPitchListener(new PitchListener());
 		this.mainWindow.addGrainIntervalListener(new GrainIntervalListener());
+		this.mainWindow.addGrainSizeListener(new GrainSizeListener());
+		this.mainWindow.addLoopTypeListener(new LoopTypeListener());
 	}
 	
 	private class ChooseFileListener implements ActionListener{
@@ -69,6 +71,28 @@ public class Controller_MainWindow {
 			// TODO Auto-generated method stub
 			float value = mainWindow.getGrainInterval();
 			controllerGrain.onChangeGrainInterval(value);
+		}
+		
+	}
+	
+	private class GrainSizeListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			// TODO Auto-generated method stub
+			int value = mainWindow.getGrainSize();
+			controllerGrain.onChangeGrainSize(value);
+		}
+		
+	}
+	
+	private class LoopTypeListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			// TODO Auto-generated method stub
+			int value = mainWindow.getLoopType();
+			controllerGrain.onChangeLoopType(value);
 		}
 		
 	}

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.JLabel;
+import javax.swing.JSpinner;
 
 public class GUI_MainWindow implements I_View{
 
@@ -25,6 +26,10 @@ public class GUI_MainWindow implements I_View{
 	private JSlider sldPitch; 
 	private JSlider sldGrainInterval;
 	private JLabel lblGrainInterval;
+	private JSlider sldGrainSize;
+	private JLabel lblGrainSize;
+	private JSpinner spnLoopType;
+	private JLabel lblLoopType;
 	 
 	/**
 	 * Create the application.
@@ -72,6 +77,22 @@ public class GUI_MainWindow implements I_View{
 		this.lblGrainInterval = new JLabel("Grain Interval");
 		this.lblGrainInterval.setBounds(213, 46, 46, 14);
 		this.frame.getContentPane().add(this.lblGrainInterval);
+		
+		this.sldGrainSize = new JSlider();
+		this.sldGrainSize.setBounds(137, 123, 200, 23);
+		this.frame.getContentPane().add(this.sldGrainSize);
+		
+		this.lblGrainSize = new JLabel("Grain Size");
+		this.lblGrainSize.setBounds(213, 105, 46, 14);
+		this.frame.getContentPane().add(this.lblGrainSize);
+		
+		this.spnLoopType = new JSpinner();
+		this.spnLoopType.setBounds(213, 182, 29, 20);
+		this.frame.getContentPane().add(this.spnLoopType);
+		
+		this.lblLoopType = new JLabel("Loop Type");
+		this.lblLoopType.setBounds(213, 157, 46, 14);
+		this.frame.getContentPane().add(this.lblLoopType);
 
 	}
 	
@@ -95,12 +116,28 @@ public class GUI_MainWindow implements I_View{
 		this.sldGrainInterval.addChangeListener(listener);
 	}
 	
+	public void addGrainSizeListener(ChangeListener listener) {
+		this.sldGrainSize.addChangeListener(listener);
+	}
+	
+	public void addLoopTypeListener(ChangeListener listener){
+		this.spnLoopType.addChangeListener(listener);
+	}
+	
 	public float getGrainInterval() {
 		return (float)this.sldGrainInterval.getValue();
 	}
 	
 	public int getPitch() {
 		return this.sldPitch.getValue(); 
+	}
+	
+	public int getGrainSize(){
+		return this.sldGrainSize.getValue();
+	}
+	
+	public int getLoopType(){
+		return (int) this.spnLoopType.getValue();
 	}
 	
 	@Override
